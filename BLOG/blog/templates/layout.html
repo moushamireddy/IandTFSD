@@ -1,0 +1,81 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-TZoJQatmzpjB6W8Xv+qkwHjJfa6fhLaUwwWgUvR+kkzUrNBSx0TJzW8XBy7ImILG/g1uJIKa0+0QInV7fYfSbA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% if title %}
+        <title>Blog - {{title}}</title>
+    {% else %}
+        <title>A simple Blog</title>
+    {% endif %}
+    </head>
+    <body>
+        <header class="site-header">
+        <!-- From bootstrap navbar component - https://getbootstrap.com/docs/5.3/components/navbar/ -->
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+              <a class="navbar-brand mr-4" href="/">Blog</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav mr-auto">
+                  <a class="nav-link" href="{{url_for('home')}}">Home</a>
+                </div>
+                  <div class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                    <a class="nav-link" href="{{ url_for('new_post')}}">New Post</a>
+                    <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+                    {% else %}
+                    <a class="nav-link" href="{{url_for('login')}}">Login</a>
+                    <a class="nav-link" href="{{url_for('register')}}">Register</a>
+                    {% endif %}
+
+                  </div>
+              </div>
+            </div>
+        </nav>
+        </header> 
+        
+        <div class="main">
+          <img src="https://media.istockphoto.com/id/1220573371/photo/minimal-work-space-creative-flat-lay-photo-of-workspace-desk-top-view-office-desk-with-laptop.jpg?s=612x612&w=0&k=20&c=xmrSzPD4LCRhPD4L5TlttC88sSYe9Pc3J2ZnxCMzzyQ=" style="width:80em; height:30em; padding-left: -10px;">
+          <div class="text">A SIMPLE BLOG</div>
+        </div> 
+        
+        <main role="main" class="container">
+            <div class="row">
+              <div class="col-md-8">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{category}}">
+                  {{message}}
+                </div>
+                {%endfor%}
+                {%endif%}
+                {% endwith %}
+                {% block content %}{% endblock %}
+              </div>
+              <div class="col-md-4">
+                <div class="content-section">
+                  <h3>Quick Links</h3>
+                  <p class='text-muted'>Important Events
+                    <ul class="list-group">
+                      <li class="list-group-item list-group-item-light">Latest Posts</li>
+                      <li class="list-group-item list-group-item-light">Announcements</li>
+                      <li class="list-group-item list-group-item-light">Calendars</li>
+                    </ul>
+                  </p>
+                </div>
+              </div>
+            </div>
+        </main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    </body>
+</html>

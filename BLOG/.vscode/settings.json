@@ -1,0 +1,6 @@
+{
+    "cSpell.words": [
+        "sqlalchemy"
+    ],
+    "python.analysis.typeCheckingMode": "basic"
+}
